@@ -1,0 +1,70 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+class Solution {
+
+    
+    static void Main(String[] args) {
+        string a = Console.ReadLine();
+        string b = Console.ReadLine();
+        
+        //rearrage letters of the word to alphabetical order
+        
+        var a_sort= ReArrangeWord(a);
+        var b_sort= ReArrangeWord(b);
+        var a_dict=FrequencyDict(a_sort);
+        var b_dict=FrequencyDict(b_sort);
+        
+        int deleteCount=0;
+        deleteCount+= CountDel(a_dict,b_dict);
+        Console.Write(deleteCount);
+    }
+    
+    public static int CountDel(IDictionary<char,int> aDict, IDictionary<char,int> bDict)
+    {
+        int delCount=0;
+        foreach(KeyValuePair<char, int> d in aDict)
+        {
+            if (bDict.ContainsKey(d.Key))
+            {
+                delCount+=(Math.Abs(d.Value-bDict[d.Key]));
+                bDict[d.Key]=-1;
+            }
+            else
+                delCount+=d.Value;
+        }
+         foreach(KeyValuePair<char, int> d in bDict)
+        {
+            if (d.Value != -1)
+                delCount+=d.Value;
+           
+        }
+        return delCount;
+    }
+    
+    public static IDictionary<char,int> FrequencyDict(char[] strChars)
+    {
+        var wordDict =new Dictionary<char,int>();
+        foreach(var c in strChars)
+        {
+            
+            if(wordDict.ContainsKey(c))
+                wordDict[c] ++;
+            else
+                //first occurence of the letter
+                wordDict.Add(c,1);
+            
+        }
+        return wordDict;
+        
+    }
+    
+    public static char[] ReArrangeWord(string str){
+        char[] strChars = str.ToCharArray();
+        Array.Sort(strChars);
+        return strChars;
+    }
+    
+    
+}
