@@ -1,0 +1,53 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        
+        // Read size of matrix
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[][] matrix = new int[n][n];
+        
+        // Read the matrix
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j<n; j++){
+                matrix[i][j] = sc.nextInt();
+            }
+        }
+        
+        System.out.println(Math.abs(diagnol1Sum(matrix,n) - diagnol2Sum(matrix,n)));
+        
+    }
+    
+    // Returns the sum of Diagnol 1 elements of an nXn matrix.
+    public static int diagnol1Sum(int[][] matrix, int n){
+        
+        int sum = 0;
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j<n; j++){
+                if(i==j){
+                    sum += matrix[i][j];
+                }
+            }
+        }
+        return sum;
+    }
+    
+    // Returns the sum of Diagnol 2 elements of an nXn matrix.
+    public static int diagnol2Sum(int[][] matrix, int n){
+        
+        int sum = 0;
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j<n; j++){
+                if((i+j) == (n-1)){
+                    sum += matrix[i][j];
+                }
+            }
+        }
+        return sum;
+    }
+    
+    
+}
